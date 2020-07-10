@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.Objects;
 import java.util.UUID;
 
-public class Config implements ConfigMethods { // TODO: 10.07.2020 version auto delete
+public class Config implements ConfigMethods {
     private final ConfigMode configMode;
     private final String folderPath;
     private final String configName;
