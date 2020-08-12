@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'de.daschi'
-version 'v1.1.1a'
+version 'v1.2.0a'
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
@@ -19,7 +19,7 @@ repositories {
 }
 
 dependencies {
-    implementation(group: 'com.github.Daschi1', name: 'JavaMySQLAPI', version: 'v1.1.2a')
+    implementation(group: 'com.github.Daschi1', name: 'JavaMySQLAPI', version: 'v1.2.0a')
     implementation(group: 'com.github.Carleslc', name: 'Simple-YAML', version: '1.6.1')
 }
 

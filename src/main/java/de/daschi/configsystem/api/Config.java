@@ -49,10 +49,10 @@ public class Config implements ConfigMethods {
 
     void setupMySQL(final String hostname, final int port, final String username, final String password, final String database) {
         this.cache = new Config(ConfigMode.YAML, this.folderPath + "cache/", "cached" + this.getConfigName());
-        MySQL.using(new MySQL(hostname, port, username, password, database));
-        MySQL.autoDisconnect(true);
+        MySQL.add("JavaConfigAPI", new MySQL(hostname, port, username, password, database));
+        MySQL.autoDisconnect("JavaConfigAPI",true);
 
-        MySQL.update("CREATE TABLE IF NOT EXISTS `" + MySQL.preventSQLInjection(this.configName) + "` " +
+        MySQL.update("JavaConfigAPI","CREATE TABLE IF NOT EXISTS `" + MySQL.preventSQLInjection("JavaConfigAPI",this.configName) + "` " +
                 "(" +
                 "`key` text," +
                 "`value` text," +
@@ -73,7 +73,7 @@ public class Config implements ConfigMethods {
             if (this.cache.containsValue(key)) {
                 return this.cache.getValue(key);
             } else {
-                final CachedRowSet cachedRowSet = MySQL.query("SELECT * FROM `" + MySQL.preventSQLInjection(this.configName) + "` WHERE `key` = '" + MySQL.preventSQLInjection(key) + "';");
+                final CachedRowSet cachedRowSet = MySQL.query("JavaConfigAPI","SELECT * FROM `" + MySQL.preventSQLInjection("JavaConfigAPI",this.configName) + "` WHERE `key` = '" + MySQL.preventSQLInjection("JavaConfigAPI",key) + "';");
                 if (cachedRowSet.next()) {
                     final String value = cachedRowSet.getString("value");
                     this.cache.setValue(key, value);
@@ -95,7 +95,7 @@ public class Config implements ConfigMethods {
             yamlFile.set(key, value);
             yamlFile.saveWithComments();
         } else {
-            MySQL.update("INSERT INTO `" + MySQL.preventSQLInjection(this.configName) + "` (`key`, `value`) VALUES ('" + MySQL.preventSQLInjection(key) + "', '" + MySQL.preventSQLInjection(value) + "') ON DUPLICATE KEY UPDATE `value` = '" + MySQL.preventSQLInjection(value) + "';");
+            MySQL.update("JavaConfigAPI","INSERT INTO `" + MySQL.preventSQLInjection("JavaConfigAPI",this.configName) + "` (`key`, `value`) VALUES ('" + MySQL.preventSQLInjection("JavaConfigAPI",key) + "', '" + MySQL.preventSQLInjection("JavaConfigAPI",value) + "') ON DUPLICATE KEY UPDATE `value` = '" + MySQL.preventSQLInjection("JavaConfigAPI",value) + "';");
         }
     }
 
@@ -105,7 +105,7 @@ public class Config implements ConfigMethods {
             yamlFile.loadWithComments();
             return yamlFile.contains(key);
         } else {
-            final CachedRowSet cachedRowSet = MySQL.query("SELECT * FROM `" + MySQL.preventSQLInjection(this.configName) + "` WHERE `key` = '" + MySQL.preventSQLInjection(key) + "';");
+            final CachedRowSet cachedRowSet = MySQL.query("JavaConfigAPI","SELECT * FROM `" + MySQL.preventSQLInjection("JavaConfigAPI",this.configName) + "` WHERE `key` = '" + MySQL.preventSQLInjection("JavaConfigAPI",key) + "';");
             return cachedRowSet.next();
         }
     }
@@ -118,7 +118,7 @@ public class Config implements ConfigMethods {
             yamlFile.remove(key);
             yamlFile.saveWithComments();
         } else {
-            MySQL.update("DELETE FROM `" + MySQL.preventSQLInjection(this.configName) + "` WHERE `key` = '" + MySQL.preventSQLInjection(key) + "';");
+            MySQL.update("JavaConfigAPI","DELETE FROM `" + MySQL.preventSQLInjection("JavaConfigAPI",this.configName) + "` WHERE `key` = '" + MySQL.preventSQLInjection("JavaConfigAPI",key) + "';");
         }
     }
 
