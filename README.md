@@ -1,4 +1,4 @@
-# ConfigSystem
+# JavaConfigAPI
 ## A mysql + yaml config system.
 
 [![](https://jitpack.io/v/Daschi1/ConfigSystem.svg)](https://jitpack.io/#Daschi1/ConfigSystem)
